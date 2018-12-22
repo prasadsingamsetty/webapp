@@ -1,17 +1,42 @@
-pipeline {
-    // If docker is used here, the image needs to have Git installed
-    agent any
-    stages {
-        stage("Checkout") {
-            steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: scm.branches,
-                    extensions: scm.extensions + [[$class: 'CleanCheckout']],
-                    userRemoteConfigs: scm.userRemoteConfigs
-                ])
+pipeline{
+	
+	agent any
 
-            }
-        }
-    }
+	stages{
+		stage ('compile stage'){
+
+			steps {
+
+			withMaven(maven : 'maven_3_6_0'){
+				sh 'mvn clean compile'
+
+				}
+			}
+		}
+
+
+		stage ('Testing stage'){
+
+			steps {
+
+			withMaven(maven : 'maven_3_6_0'){
+				sh 'mvn test'
+
+				}
+			}
+		}
+
+
+		stage ('Deploy stage'){
+
+			steps {
+
+			withMaven(maven : 'maven_3_6_0'){
+				sh 'mvn deploy'
+
+				}
+			}
+		}
+
+	}
 }
