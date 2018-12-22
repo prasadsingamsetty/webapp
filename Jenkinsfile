@@ -10,10 +10,9 @@ pipeline{
 			withMaven(maven : 'maven_3_6_0'){
 				sh 'mvn clean compile'
 
-				}
 			}
 		}
-
+	}
 
 		stage ('Testing stage'){
 
@@ -22,10 +21,9 @@ pipeline{
 			withMaven(maven : 'maven_3_6_0'){
 				sh 'mvn test'
 
-				}
 			}
 		}
-
+	}
 
 		stage ('Deploy stage'){
 
@@ -33,10 +31,9 @@ pipeline{
 
 			withMaven(maven : 'maven_3_6_0'){
 				sh 'mvn deploy'
-
-				}
 			}
 		}
+	}
 
 	}
 }
