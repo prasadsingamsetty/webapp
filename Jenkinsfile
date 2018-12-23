@@ -13,6 +13,11 @@ pipeline{
 			}
 		}
 	}
+		stage('Deploy') {
+            		steps {
+                        sudo cp target/*.war /opt/tomcat/webapps
+            }
+        }
 
 	}
 }
