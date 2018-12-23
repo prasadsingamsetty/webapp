@@ -1,20 +1,39 @@
-pipeline {
-  agent any
+pipeline{
+	
+	agent any
 
-  options {
-    skipDefaultCheckout true
-  }
-stages{
-stage('Checkout') {
-  steps {
-    checkout([
-        $class: 'GitSCM',
-        branches: scm.branches,
-        extensions: scm.extensions + [[$class: 'LocalBranch'], [$class: 'CleanCheckout']],
-        userRemoteConfigs: scm.userRemoteConfigs
-    ])
-  }
-}
-}
+	stages{
+		stage ('compile stage'){
 
+			steps {
+
+			withMaven(maven : 'maven_3_6_0'){
+				sh 'mvn clean compile'
+
+			}
+		}
+	}
+
+		stage ('Testing stage'){
+
+			steps {
+
+			withMaven(maven : 'maven_3_6_0'){
+				sh 'mvn test'
+
+			}
+		}
+	}
+		stage ('Packag stage'){
+
+			steps {
+
+			withMaven(maven : 'maven_3_6_0'){
+				sh 'mvn package'
+
+			}
+		}
+	}
+
+	}
 }
