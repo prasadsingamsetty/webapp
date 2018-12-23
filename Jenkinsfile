@@ -3,21 +3,20 @@ pipeline{
 	agent any
 
 	stages{
-		stage ('Packag Stage'){
+	stage ('Packag Stage'){
+		steps {
 
-			steps {
-
-			withMaven(maven : 'maven_3_6_0'){
-				sh 'mvn clean install'
+		withMaven(maven : 'maven_3_6_0'){
+		sh 'mvn clean install'
 
 			}
 		}
-		stage('Deploy') {
-            		steps {
-                        sudo cp target/*.war /opt/tomcat/webapps
+	stage('Deploy') {
+            	steps {
+                sudo cp target/*.war /opt/tomcat/webapps
             }
         }
+	
 }
 
-	}
 }
