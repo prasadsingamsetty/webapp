@@ -1,39 +1,16 @@
-pipeline{
-	
-	agent any
-
-	stages{
-		stage ('compile stage'){
-
-			steps {
-
-			withMaven(maven : 'maven_3_6_0'){
-				sh 'mvn clean compile'
-
-			}
-		}
+pipeline {
+  agent any
+  stages {
+    stage('Source') { // Get code
+      steps {
+        // get code from our Git repository
+        git 'https://github.com/brentlaster/roarv2'
+      }
+    }
+    stage('Compile') { // Compile and do unit testing
+	withMaven(maven : 'maven_3_6_0'){
+		sh 'mvn clean compile'
 	}
-
-		stage ('Testing stage'){
-
-			steps {
-
-			withMaven(maven : 'maven_3_6_0'){
-				sh 'mvn test'
-
-			}
-		}
-	}
-		stage ('Packag stage'){
-
-			steps {
-
-			withMaven(maven : 'maven_3_6_0'){
-				sh 'mvn package'
-
-			}
-		}
-	}
-
-	}
+    }
+  }
 }
