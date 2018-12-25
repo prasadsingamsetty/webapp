@@ -7,10 +7,9 @@ pipeline {
 		sh 'mvn clean install'
             }
         }
-        stage('Test'){
+        stage('Test') {
             steps {
                 sh 'mvn test'
-                junit 'reports/**/*.xml' 
             }
         }
         stage('Package') {
@@ -18,7 +17,7 @@ pipeline {
                 sh 'mvn package'
             }
         }
-	stage('Package') {
+	stage('Install') {
             steps {
                 sh 'mvn install'
             }
